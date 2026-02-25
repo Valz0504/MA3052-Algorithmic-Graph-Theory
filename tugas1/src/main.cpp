@@ -102,7 +102,7 @@ void solve() {
     int A; cin >> A;
     cout << "Masukkan node B: ";
     int B; cin >> B;
-    cout << "Penelusuran menggunakan DFS dari A: ";
+    cout << "\nPenelusuran menggunakan DFS dari A: ";
     vector<int> dfsTraversal = dfs(A);
     for (auto e : dfsTraversal)
     {
@@ -110,7 +110,7 @@ void solve() {
     }
     cout << '\n';
 
-    cout << "Penelusuran menggunakan BFS dari A: ";
+    cout << "\nPenelusuran menggunakan BFS dari A: ";
     vector<int> bfsTraversal = bfs(A);
     for (auto e : bfsTraversal)
     {
@@ -128,17 +128,43 @@ void solve() {
     }
     if (ok)
     {
-        cout << "ADA lintasan dari A ke B!\n";
+        cout << "\nADA lintasan dari A ke B!\n";
     } else{
-        cout << "TIDAK ADA lintasan dari A ke B!\n";
+        cout << "\nTIDAK ADA lintasan dari A ke B!\n";
     }
 
     if (dfsTraversal.size() == n)
     {
-        cout << "Graf ini terhubung!\n";
+        cout << "\nGraf ini terhubung!\n";
     } else{
-        cout << "Graf ini tidak terhubung!\n";
+        cout << "\nGraf ini tidak terhubung!\n";
     }
+
+    // ngecek jumlah component dan menentukan component terbesar
+    int cntComponent = 0;
+    vector<int> largestComponent;
+    vector<bool> mark(n + 5, false); 
+    for (int i = 1; i <= n; i++)
+    {
+        if (!mark[i])
+        {
+            cntComponent++;
+            vector<int> result = dfs(i);
+            if (result.size() > largestComponent.size())
+            {
+                largestComponent = result;
+            }
+            for (auto e : result)
+            {
+                mark[e] = true;
+            }
+        }
+    }
+    
+    cout << "\nJumlah component: " << cntComponent << '\n';
+    cout << "Component terbesar berada di node-node berikut: ";
+    for (auto e : largestComponent) cout << e << " ";
+    cout << '\n';
 }
 
 
