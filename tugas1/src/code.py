@@ -67,46 +67,33 @@ class AnalisisGraf:
         # Jika jumlah node yang bisa dikunjungi sama dengan total node di graf, maka terhubung
         return len(node_terkunjungi) == len(self.graf)
 
-# CONTOH PENGGUNAAN 1
-
 if __name__ == "__main__":
-    # Membuat graf contoh (Undirected Graph). 
-    contoh_graf = {
-        'A': ['B', 'C'],
-        'B': ['A', 'C'],
-        'C': ['A', 'B'],
-        'D': ['E'],
-        'E': ['D'],
-        'F': []
-    }
+    n = int(input("Banyak Node: "))
+    m = int(input("Banyak Edge: "))
 
-    program = AnalisisGraf(contoh_graf)
+    graf = {}
 
-    print("--- HASIL TUGAS 1 ---")
-    print(f"1. DFS dari 'A': {program.dfs('A')}")
-    print(f"2. BFS dari 'A': {program.bfs('A')}")
-    print(f"3. Ada lintasan 'A' ke 'C'? : {program.ada_lintasan('A', 'C')}")
-    print(f"4. Ada lintasan 'A' ke 'E'? : {program.ada_lintasan('A', 'E')}")
-    print(f"5. Apakah graf terhubung penuh? : {program.cek_keterhubungan()}")
+    for i in range(1, n + 1):
+        graf[i] = []
 
-  # CONTOH PENGGUNAAN 2
+    print("Masukkan edge (format: u v)")
+    for _ in range(m):
+        u, v = map(int, input().split())
+        graf[u].append(v)
+        graf[v].append(u)
 
-if __name__ == "__main__":
-    # Membuat graf contoh (Undirected Graph). 
-    contoh_graf = {
-        'A': ['B', 'C', 'E'],
-        'B': ['B', 'C'],
-        'C': ['A', 'B'],
-        'D': ['E', 'F'],
-        'E': ['A', 'D'],
-        'F': ['D']
-    }
+    program = AnalisisGraf(graf)
 
-    program = AnalisisGraf(contoh_graf)
+    A = int(input("Masukkan node A: "))
+    B = int(input("Masukkan node B: "))
 
-    print("--- HASIL TUGAS 1 ---")
-    print(f"1. DFS dari 'A': {program.dfs('A')}")
-    print(f"2. BFS dari 'A': {program.bfs('A')}")
-    print(f"3. Ada lintasan 'A' ke 'C'? : {program.ada_lintasan('A', 'C')}")
-    print(f"4. Ada lintasan 'A' ke 'E'? : {program.ada_lintasan('A', 'E')}")
-    print(f"5. Apakah graf terhubung penuh? : {program.cek_keterhubungan()}")
+    print("\nDFS dari A:")
+    dfsTraversal = program.dfs(A)
+    print(*dfsTraversal)
+
+    print("\nBFS dari A:")
+    bfsTraversal = program.bfs(A)
+    print(*bfsTraversal)
+
+    print("\nAda lintasan dari A ke B? :", program.ada_lintasan(A, B))
+    print("\nApakah graf terhubung penuh? :", program.cek_keterhubungan())
